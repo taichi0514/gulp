@@ -1,37 +1,24 @@
 const gulp = require('gulp'),
-	webpack = require('webpack'),
-	webpackStream = require('webpack-stream'),
-	webpackConfig = require('./webpack.config'),
-	fs = require("fs"),
+	// webpack = require('webpack'),
+	// webpackStream = require('webpack-stream'),
+	// webpackConfig = require('./webpack.config'),
 	gsass = require('gulp-sass'),
-	sass = require('gulp-ruby-sass'),
 	plumber = require('gulp-plumber'),
-	notify = require('gulp-notify'),
 	browserSync = require('browser-sync'),
 	changed = require('gulp-changed'),
 	cache = require('gulp-cached'),
+	progeny = require('gulp-progeny');
 	rename = require("gulp-rename"),
 	htmlmin = require('gulp-htmlmin'),
 	cssmin = require('gulp-cssmin'),
 	uglify = require('gulp-uglify'),
 	phpMinify = require('@aquafadas/gulp-php-minify'),
-
-	// ソースマップ
 	sourcemaps = require("gulp-sourcemaps");
-// PostCss
-postcss = require('gulp-postcss'),
+	postcss = require('gulp-postcss'),
 	assets = require('postcss-assets'),
-
-	// AutoPleFixer
 	autoprefixer = require('gulp-autoprefixer'),
-
-	// 画像圧縮系(lossless)
 	imagemin = require('gulp-imagemin'),
 	pngquant = require('imagemin-pngquant');
-//	imagemin = require('imagemin'),
-//	jpegtran = require('imagemin-jpegtran'),
-//	optipng = require('imagemin-optipng');
-
 const dir = {
 	src: './htdocs/', // _srcフォルダ置き換え
 	// dist: '../sample/dist' // destフォルダ置き換え
@@ -42,10 +29,6 @@ gulp.task('w', function () {
 	gulp.watch(dir.src + '/**/*.html', ['reload']);
 	gulp.watch(dir.src + '/js/**/*.js', ['reload']);
 	gulp.watch(dir.src + '/scss/**/*.scss', ['postcss']);
-	// var watcher = gulp.watch(dir.src + '/css/**/*.css',['compilecss']);
-	// watcher.on('change', function(event) {
-	// 	console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-	// });
 });
 
 // ローカルサーバ起動
@@ -69,7 +52,8 @@ gulp.task('reload', function () {
 // postcssを使用してSCSSを変換
 gulp.task('postcss', function () {
 	return gulp.src(dir.src + '/scss/**/*.scss')
-		// .pipe(cache('postcss'))
+		.pipe(cache('postcss'))
+		.pipe(progeny())
 		.pipe(plumber({
 			errorHandler: function (err) {
 				console.log(err.messageFormatted);
