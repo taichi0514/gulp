@@ -1,0 +1,42 @@
+{
+  "name": "template",
+  "version": "1.0.0",
+  "main": "gulpfile.js",
+  "author": "Taichi.Murai",
+  "license": "MIT",
+  "homepage": "https://github.com/belowt/taskrunner",
+  "bugs": {
+    "url": "https://github.com/belowt/taskrunner"
+  },
+  "scripts": {
+    "gulp": "gulp",
+    "webpack": "webpack"
+  },
+  "devDependencies": {
+    "@aquafadas/gulp-php-minify": "^0.3.1",
+    "browser-sync": "^2.18.5",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-cached": "^1.1.1",
+    "gulp-progeny":"^0.4.1",
+    "gulp-changed": "^3.1.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-debug": "^3.1.0",
+    "gulp-filter": "^5.1.0",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-imagemin": "^4.0.0",
+    "gulp-notify": "^3.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-postcss": "^7.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-ruby-sass": "^2.1.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0",
+    "imagemin-pngquant": "^5.0.0",
+    "jquery": "^3.2.1",
+    "postcss-assets": "^5.0.0",
+    "webpack": "^3.10.0",
+    "webpack-stream": "^4.0.0"
+  }
+}
