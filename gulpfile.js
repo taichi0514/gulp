@@ -1,7 +1,4 @@
 const gulp = require('gulp'),
-	// webpack = require('webpack'),
-	// webpackStream = require('webpack-stream'),
-	// webpackConfig = require('./webpack.config'),
 	gsass = require('gulp-sass'),
 	plumber = require('gulp-plumber'),
 	browserSync = require('browser-sync'),
@@ -120,19 +117,6 @@ gulp.task('minify-js', function () {
 //   .pipe(phpMinify())
 //   .pipe(gulp.dest('./htdocs_minify/minify/php'))
 // );
-
-//webpack
-// gulp.task('webpack', function () {
-// 	webpackStream(webpackConfig, webpack)
-// 	.pipe(plumber({
-// 		errorHandler: function (err) {
-// 			console.log(err.messageFormatted);
-// 			this.emit('end');
-// 		}
-// 	}))
-// 		.pipe(gulp.dest('./htdocs/js/'));    // 出力先のフォルダを相対パスで指定する
-// });
-
 
 // 実行
 gulp.task('default', ["w", "server"]);

@@ -30,10 +30,6 @@
     "gulp-sourcemaps": "^2.6.3",
     "gulp-uglify": "^3.0.0",
     "imagemin-pngquant": "^5.0.0",
-    "jquery": "^3.2.1",
-    "postcss-assets": "^5.0.0",
-    "uglifyjs-webpack-plugin": "^1.1.6",
-    "webpack": "^3.10.0",
-    "webpack-stream": "^4.0.0"
+    "postcss-assets": "^5.0.0"
   }
 }
