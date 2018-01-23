@@ -4,9 +4,9 @@
   "main": "gulpfile.js",
   "author": "Taichi.Murai",
   "license": "MIT",
-  "homepage": "https://github.com/belowt/taskrunner",
+  "homepage": "https://github.com/belowt/gulp",
   "bugs": {
-    "url": "https://github.com/belowt/taskrunner"
+    "url": "https://github.com/belowt/gulp"
   },
   "scripts": {
     "gulp": "gulp",
