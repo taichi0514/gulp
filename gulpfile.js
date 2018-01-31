@@ -58,7 +58,7 @@ gulp.task('postcss', function () {
 			}
 		}))
 		.pipe(sourcemaps.init())
-		.pipe(gsass())
+		.pipe(gsass({outputStyle: 'compressed'}).on('error', gsass.logError))
 		.pipe(autoprefixer({
 			// メインブラウザの最新2バージョン、ie9以上、iOS 9以上、Android 5以上
 			browsers: ['last 2 version', 'iOS >= 8.1', 'Android >= 4.4'],
