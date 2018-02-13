@@ -1,5 +1,6 @@
 const gulp = require('gulp'),
 	gsass = require('gulp-sass'),
+	sassGlob = require("gulp-sass-glob"),
 	plumber = require('gulp-plumber'),
 	browserSync = require('browser-sync'),
 	changed = require('gulp-changed'),
@@ -58,6 +59,7 @@ gulp.task('postcss', function () {
 			}
 		}))
 		.pipe(sourcemaps.init())
+		.pipe(sassGlob())
 		.pipe(gsass({outputStyle: 'compressed'}).on('error', gsass.logError))
 		.pipe(autoprefixer({
 			// メインブラウザの最新2バージョン、ie9以上、iOS 9以上、Android 5以上
