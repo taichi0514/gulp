@@ -29,6 +29,10 @@ gulp.task('w', function () {
 	gulp.watch(dir.src + '/scss/**/*.scss', ['postcss']);
 });
 
+gulp.task('sass', function(){
+	gulp.watch(dir.src + '/scss/**/*.scss', ['postcss']);
+})
+
 // ローカルサーバ起動
 gulp.task('server', function () {
 	browserSync({
