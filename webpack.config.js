@@ -1,11 +1,10 @@
-const webpack = require("webpack"),
-UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: __dirname + "/htdocs/js/app.js", //ビルドするファイル
   entry: {
     // "vendor":['jquery'],
-    "bundle": __dirname + '/htdocs/js/app.js'
+    "main": __dirname + '/htdocs/js/app.js'
     // "profile": __dirname +'/htdocs/js/components.js',
   },
   output: {
@@ -19,8 +18,18 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [
-      //loader
-    ]
-  }
+    rules: [{
+      // ローダーの処理対象ファイル
+      test: /\.js$/,
+      // ローダーの処理対象から外すディレクトリ
+      exclude: /node_modules/,
+      // 利用するローダー
+      use: [{
+        loader: 'babel-loader',
+        options: {
+          presets: ['env']
+        }
+      }],
+    }],
+  },
 };
