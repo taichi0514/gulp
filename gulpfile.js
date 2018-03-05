@@ -28,7 +28,7 @@ const dir = {
 // ファイル監視
 gulp.task('w', function () {
 	gulp.watch(dir.src + '/**/*.html', ['reload']);
-	gulp.watch(dir.src + '/js/**/*.js', ['webpack','reload']);
+	gulp.watch(dir.src + '/js/**/*.js', ['reload']);
 	gulp.watch(dir.src + '/scss/**/*.scss', ['postcss']);
 });
 
