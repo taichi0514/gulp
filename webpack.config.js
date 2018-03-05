@@ -1,6 +1,7 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
+  watch: true,
   entry: __dirname + "/htdocs/js/app.js", //ビルドするファイル
   entry: {
     // "vendor":['jquery'],
@@ -31,5 +32,6 @@ module.exports = {
         }
       }],
     }],
+
   },
 };
