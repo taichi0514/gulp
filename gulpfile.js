@@ -2,7 +2,6 @@ const gulp = require('gulp'),
 	webpack = require('webpack'),
 	webpackStream = require('webpack-stream'),
 	webpackConfig = require('./webpack.config'),
-	babel = require('gulp-babel'),
 	gsass = require('gulp-sass'),
 	sassGlob = require("gulp-sass-glob"),
 	plumber = require('gulp-plumber'),
@@ -136,6 +135,7 @@ gulp.task('webpack', function () {
 				this.emit('end');
 			}
 		}))
+	.pipe(gulp.dest(dir.src + 'js'))
 });
 
 // 実行
