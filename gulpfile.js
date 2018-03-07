@@ -13,7 +13,6 @@ const gulp = require('gulp'),
 	htmlmin = require('gulp-htmlmin'),
 	cssmin = require('gulp-cssmin'),
 	uglify = require('gulp-uglify'),
-	phpMinify = require('@aquafadas/gulp-php-minify'),
 	sourcemaps = require("gulp-sourcemaps");
 	postcss = require('gulp-postcss'),
 	assets = require('postcss-assets'),
