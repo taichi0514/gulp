@@ -102,26 +102,35 @@ gulp.task('imagemin', function () {
 gulp.task('minify-html', function () {
 	//html
 	return gulp.src(dir.src + '/**/*.html')
+	.pipe(sourcemaps.init())
 		.pipe(htmlmin({
 			collapseWhitespace: true
 		}))
-		// .pipe(rename({suffix: '.min'}))
+		.pipe(sourcemaps.write('map'))
 		.pipe(gulp.dest(dir.dist));
 });
 
 gulp.task('minify-css', function () {
 	//css
 	return gulp.src(dir.src + '/**/*.css')
+		.pipe(sourcemaps.init())
 		.pipe(cssmin())
-		// .pipe(rename({suffix: '.min'}))
+		.pipe(sourcemaps.write('map'))
 		.pipe(gulp.dest(dir.dist + 'css'));
 });
 
 gulp.task('minify-js', function () {
 	//jsgul
 	return gulp.src(dir.src + '/**/*.js')
+	.pipe(plumber({
+		errorHandler: function (err) {
+			console.log(err.messageFormatted);
+			this.emit('end');
+		}
+	}))
+		.pipe(sourcemaps.init())
 		.pipe(uglify())
-		// .pipe(rename({suffix: '.min'}))
+		.pipe(sourcemaps.write('map'))
 		.pipe(gulp.dest(dir.dist + 'js'));
 });
 
