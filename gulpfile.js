@@ -10,11 +10,9 @@ const gulp = require("gulp"),
   htmlmin = require("gulp-htmlmin"),
   cssmin = require("gulp-cssmin"),
   uglify = require("gulp-uglify"),
-  phpMinify = require("@aquafadas/gulp-php-minify"),
   sourcemaps = require("gulp-sourcemaps"),
   postcss = require("gulp-postcss"),
   assets = require("postcss-assets"),
-  // autoprefixer = require("gulp-autoprefixer"),
   imagemin = require("gulp-imagemin"),
   pngquant = require("imagemin-pngquant"),
   autoprefixer = require("autoprefixer");
@@ -74,11 +72,7 @@ gulp.task("postcss", () => {
           // メインブラウザの最新2バージョン、ie9以上、iOS 9以上、Android 5以上
           browsers: ["last 2 version", "iOS >= 8.1", "Android >= 4.4"],
           cascade: false
-        })
-      ])
-    )
-    .pipe(
-      postcss([
+        }),
         assets({
           loadPaths: [dir.src + "img/"], //対象ディレクトリ
           relative: true // 相対パス
