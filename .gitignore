@@ -1,3 +1,4 @@
 /node_modules/*
 /htdocs/*
 Thumbs.db
+*.code-workspace
