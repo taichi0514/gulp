@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-const gulp = require('gulp'),
-	webpack = require('webpack'),
-	webpackStream = require('webpack-stream'),
-	webpackConfig = require('./webpack.config'),
-	gsass = require('gulp-sass'),
-	sassGlob = require("gulp-sass-glob"),
-	plumber = require('gulp-plumber'),
-	browserSync = require('browser-sync'),
-	changed = require('gulp-changed'),
-	cache = require('gulp-cached'),
-	progeny = require('gulp-progeny');
-	rename = require("gulp-rename"),
-	htmlmin = require('gulp-htmlmin'),
-	cssmin = require('gulp-cssmin'),
-	uglify = require('gulp-uglify'),
-	sourcemaps = require("gulp-sourcemaps");
-	postcss = require('gulp-postcss'),
-	assets = require('postcss-assets'),
-	autoprefixer = require('gulp-autoprefixer'),
-	imagemin = require('gulp-imagemin'),
-	pngquant = require('imagemin-pngquant');
-const dir = {
-	src: './htdocs/', // _srcフォルダ置き換え
-	dist: './htdocs/dist/' // destフォルダ置き換え
-=======
 const gulp = require("gulp"),
   gsass = require("gulp-sass"),
   sassGlob = require("gulp-sass-glob"),
@@ -40,13 +14,13 @@ const gulp = require("gulp"),
   sourcemaps = require("gulp-sourcemaps"),
   postcss = require("gulp-postcss"),
   assets = require("postcss-assets"),
-  autoprefixer = require("gulp-autoprefixer"),
+  // autoprefixer = require("gulp-autoprefixer"),
   imagemin = require("gulp-imagemin"),
-  pngquant = require("imagemin-pngquant");
+  pngquant = require("imagemin-pngquant"),
+  autoprefixer = require("autoprefixer");
 const dir = {
   src: "./htdocs/" // _srcフォルダ置き換え
   // dist: '../sample/dist' // destフォルダ置き換え
->>>>>>> develop
 };
 
 // ファイル監視
@@ -95,11 +69,13 @@ gulp.task("postcss", () => {
     .pipe(sassGlob())
     .pipe(gsass({ outputStyle: "compressed" }).on("error", gsass.logError))
     .pipe(
-      autoprefixer({
-        // メインブラウザの最新2バージョン、ie9以上、iOS 9以上、Android 5以上
-        browsers: ["last 2 version", "iOS >= 8.1", "Android >= 4.4"],
-        cascade: false
-      })
+      postcss([
+        autoprefixer({
+          // メインブラウザの最新2バージョン、ie9以上、iOS 9以上、Android 5以上
+          browsers: ["last 2 version", "iOS >= 8.1", "Android >= 4.4"],
+          cascade: false
+        })
+      ])
     )
     .pipe(
       postcss([
