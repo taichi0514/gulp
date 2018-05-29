@@ -30,7 +30,7 @@ https://qiita.com/mo4_9/items/0221f50c22864ffe71f3
 
 ## minify 機能
 
-一括 minify
+一括 minify コマンド
 
 `gulp minify`
 
