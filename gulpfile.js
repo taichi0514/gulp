@@ -17,14 +17,20 @@ const gulp = require("gulp"),
   pngquant = require("imagemin-pngquant"),
   autoprefixer = require("autoprefixer");
 const dir = {
-  src: "./htdocs/" // _srcフォルダ置き換え
-  // dist: '../sample/dist' // destフォルダ置き換え
+  src: "./htdocs/", // _srcフォルダ置き換え
+  dist: "../sample/dist" // destフォルダ置き換え
 };
+
+const watch_reload = [
+  "./public/**/*.html",
+  "./public/**/*.js",
+  "fuel/app/**/*.php",
+  "!fuel/app/logs/**/*.php"
+];
 
 // ファイル監視
 gulp.task("w", () => {
-  gulp.watch(dir.src + "/**/*.html", ["reload"]);
-  gulp.watch(dir.src + "/js/**/*.js", ["reload"]);
+  gulp.watch(watch_reload, ["reload"]);
   gulp.watch(dir.src + "/scss/**/*.scss", ["postcss"]);
 });
 
