@@ -15,7 +15,8 @@ const gulp = require("gulp"),
   assets = require("postcss-assets"),
   imagemin = require("gulp-imagemin"),
   pngquant = require("imagemin-pngquant"),
-  autoprefixer = require("autoprefixer");
+  autoprefixer = require("autoprefixer"),
+  minimist = require("minimist");
 let argv = minimist(process.argv.slice(2));
 const dir = {
   src: "./htdocs/", // _srcフォルダ置き換え
@@ -47,8 +48,12 @@ gulp.task("server", function() {
   }
 
   browserSync({
-    notify: false,
-    proxy: proxy
+    server: {
+      baseDir: dir.src,
+      index: "index.html"
+    }
+    // notify: false,
+    // proxy: proxy
   });
 });
 
@@ -77,8 +82,8 @@ gulp.task("postcss", () => {
     .pipe(
       postcss([
         autoprefixer({
-          // メインブラウザの最新2バージョン、ie9以上、iOS 9以上、Android 5以上
-          browsers: ["last 2 version", "iOS >= 8.1", "Android >= 4.4"],
+          // メインブラウザの最新2バージョン、ie10以上、iOS 9以上、Android 5以上
+          browsers: ["last 2 version", "iOS >= 10", "Android >= 5.0"],
           cascade: false
         }),
         assets({
