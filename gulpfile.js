@@ -16,6 +16,7 @@ const gulp = require("gulp"),
   imagemin = require("gulp-imagemin"),
   pngquant = require("imagemin-pngquant"),
   autoprefixer = require("autoprefixer");
+let argv = minimist(process.argv.slice(2));
 const dir = {
   src: "./htdocs/", // _srcフォルダ置き換え
   dist: "../sample/dist" // destフォルダ置き換え
@@ -39,14 +40,15 @@ gulp.task("sass", () => {
 });
 
 // ローカルサーバ起動
-gulp.task("server", () => {
+gulp.task("server", function() {
+  let proxy = "localhost";
+  if (argv.proxy !== void 0) {
+    proxy = argv.proxy;
+  }
+
   browserSync({
-    // port: 8282,
-    // notify: false,
-    server: {
-      baseDir: dir.src,
-      index: "index.html"
-    }
+    notify: false,
+    proxy: proxy
   });
 });
 
