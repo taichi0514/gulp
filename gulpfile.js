@@ -48,8 +48,12 @@ gulp.task("server", function() {
   }
 
   browserSync({
-    notify: false,
-    proxy: proxy
+    server: {
+      baseDir: dir.src,
+      index: "index.html"
+    }
+    // notify: false,
+    // proxy: proxy
   });
 });
 
