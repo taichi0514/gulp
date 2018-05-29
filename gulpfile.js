@@ -15,7 +15,8 @@ const gulp = require("gulp"),
   assets = require("postcss-assets"),
   imagemin = require("gulp-imagemin"),
   pngquant = require("imagemin-pngquant"),
-  autoprefixer = require("autoprefixer");
+  autoprefixer = require("autoprefixer"),
+  minimist = require("minimist");
 let argv = minimist(process.argv.slice(2));
 const dir = {
   src: "./htdocs/", // _srcフォルダ置き換え
