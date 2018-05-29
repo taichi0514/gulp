@@ -16,15 +16,22 @@ const gulp = require("gulp"),
   imagemin = require("gulp-imagemin"),
   pngquant = require("imagemin-pngquant"),
   autoprefixer = require("autoprefixer");
+let argv = minimist(process.argv.slice(2));
 const dir = {
-  src: "./htdocs/" // _srcフォルダ置き換え
-  // dist: '../sample/dist' // destフォルダ置き換え
+  src: "./htdocs/", // _srcフォルダ置き換え
+  dist: "../sample/dist" // destフォルダ置き換え
 };
+
+const watch_reload = [
+  "./public/**/*.html",
+  "./public/**/*.js",
+  "fuel/app/**/*.php",
+  "!fuel/app/logs/**/*.php"
+];
 
 // ファイル監視
 gulp.task("w", () => {
-  gulp.watch(dir.src + "/**/*.html", ["reload"]);
-  gulp.watch(dir.src + "/js/**/*.js", ["reload"]);
+  gulp.watch(watch_reload, ["reload"]);
   gulp.watch(dir.src + "/scss/**/*.scss", ["postcss"]);
 });
 
@@ -33,14 +40,15 @@ gulp.task("sass", () => {
 });
 
 // ローカルサーバ起動
-gulp.task("server", () => {
+gulp.task("server", function() {
+  let proxy = "localhost";
+  if (argv.proxy !== void 0) {
+    proxy = argv.proxy;
+  }
+
   browserSync({
-    // port: 8282,
-    // notify: false,
-    server: {
-      baseDir: dir.src,
-      index: "index.html"
-    }
+    notify: false,
+    proxy: proxy
   });
 });
 
