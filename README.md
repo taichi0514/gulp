@@ -4,7 +4,7 @@
 
 ## browserSync
 
-機能単体起動  
+browserSync 単体起動  
 `gulp server`
 
 ## scss 機能
@@ -28,7 +28,7 @@ https://parashuto.com/rriver/tools/using-custom-data-for-autoprefixer
 https://qiita.com/mo4_9/items/0221f50c22864ffe71f3  
 ↑ 一年ぐらい更新がないので使わないほうが良いかも
 
-### minify 機能一括 minify
+## minify 機能一括 minify
 
 `gulp minify`
 
