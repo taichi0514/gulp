@@ -81,7 +81,7 @@ gulp.task("postcss", () => {
     )
     .pipe(sourcemaps.init())
     .pipe(sassGlob())
-    .pipe(gsass({ outputStyle: "compressed" }).on("error", gsass.logError))
+    .pipe(gsass())
     .pipe(
       postcss([
         autoprefixer({
