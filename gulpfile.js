@@ -44,7 +44,7 @@ gulp.task("sass", () => {
 });
 
 // ローカルサーバ起動
-gulp.task("server", function() {
+gulp.task("server", () => {
   let proxy = "localhost";
   if (argv.proxy !== void 0) {
     proxy = argv.proxy;
@@ -57,7 +57,7 @@ gulp.task("server", function() {
     }
     // notify: false,
     // proxy: proxy
-  });
+  })
 });
 
 // ブラウザリロード
@@ -73,7 +73,7 @@ gulp.task("postcss", () => {
     .pipe(progeny())
     .pipe(
       plumber({
-        errorHandler: function(err) {
+        errorHandler: function (err) {
           console.log(err.messageFormatted);
           this.emit("end");
         }
@@ -98,7 +98,7 @@ gulp.task("postcss", () => {
     )
     .pipe(sourcemaps.write("map"))
     .pipe(gulp.dest(dir.src + "css"))
-    .pipe(browserSync.stream());
+    .pipe(browserSync.stream())
 });
 
 // 画像圧縮処理
@@ -147,7 +147,7 @@ gulp.task("minify-js", () => {
     .src(dir.src + "/**/*.js")
     .pipe(
       plumber({
-        errorHandler: function(err) {
+        errorHandler: function (err) {
           console.log(err.messageFormatted);
           this.emit("end");
         }
@@ -164,7 +164,7 @@ gulp.task("webpack", () => {
   webpackStream(webpackConfig, webpack)
     .pipe(
       plumber({
-        errorHandler: function(err) {
+        errorHandler: function (err) {
           console.log(err.messageFormatted);
           this.emit("end");
         }
@@ -173,7 +173,7 @@ gulp.task("webpack", () => {
     .pipe(gulp.dest(dir.src + "js"));
 });
 
-// 実行
-gulp.task("default", ["w", "server"]);
-//minify コマンド
-gulp.task("minify", ["minify-html", "minify-css", "minify-js", "imagemin"]);
+// // 実行
+// gulp.task("default", ["w", "server"]);
+// //minify コマンド
+// gulp.task("minify", ["minify-html", "minify-css", "minify-js", "imagemin"]);
