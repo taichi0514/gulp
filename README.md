@@ -1,17 +1,20 @@
-# gulp 起動コマンド
+# gulp v4 起動コマンド
 
-`gulp`
+`npx gulp`  
+
+V4にバージョンアップ方法下記参照  
+https://qiita.com/jshimazu/items/2c281bd2d480cce322e9
 
 ## browserSync
 
 browserSync 単体起動  
-`gulp server`
+`npx gulp server`
 
 ## scss 機能
 
 ### コンパイル処理のみ
 
-`gulp sass`
+`npx gulp sass`
 
 ### scss 拡張機能使用方法
 
@@ -32,21 +35,21 @@ https://qiita.com/mo4_9/items/0221f50c22864ffe71f3
 
 一括 minify コマンド
 
-`gulp minify`
+`npx gulp minify`
 
 ### 画像圧縮処理
 
-`gulp imagemin`  
+`npx gulp imagemin`  
 https://ichimaruni-design.com/2017/06/image-min/
 
 ### minify-html
 
-`gulp minify-html`
+`npx gulp minify-html`
 
 ### minify-css
 
-`gulp minify-css`
+`npx gulp minify-css`
 
 ### minify-js
 
-`minify-js`
+`npx minify-js`
