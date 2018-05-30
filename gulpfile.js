@@ -20,28 +20,31 @@ const gulp = require("gulp"),
 let argv = minimist(process.argv.slice(2));
 const dir = {
   src: "./htdocs/", // _srcフォルダ置き換え
-  dist: "../sample/dist" // destフォルダ置き換え
+  dist: "./dist/htdocs",
+  distCss: "./dist/htdocs/css",
+  distJs: "./dist/htdocs/js",
+  distImg: "./dist/htdocs/img**/*.{jpg,jpeg,png,gif,svg}"
 };
 
 const watch_reload = [
-  "./public/**/*.html",
-  "./public/**/*.js",
+  "./htdocs/**/*.html",
+  "./htdocs/**/*.js",
   "fuel/app/**/*.php",
   "!fuel/app/logs/**/*.php"
 ];
 
 // ファイル監視
 gulp.task("w", () => {
-  gulp.watch(watch_reload, ["reload"]);
-  gulp.watch(dir.src + "/scss/**/*.scss", ["postcss"]);
+  gulp.watch(watch_reload, gulp.series("reload"))
+  gulp.watch(dir.src + "scss/**/*.scss", gulp.series("postcss"))
 });
 
 gulp.task("sass", () => {
-  gulp.watch(dir.src + "/scss/**/*.scss", ["postcss"]);
+  return gulp.watch(dir.src + "scss/**/*.scss", gulp.series("postcss"))
 });
 
 // ローカルサーバ起動
-gulp.task("server", function() {
+gulp.task("server", () => {
   let proxy = "localhost";
   if (argv.proxy !== void 0) {
     proxy = argv.proxy;
@@ -54,7 +57,7 @@ gulp.task("server", function() {
     }
     // notify: false,
     // proxy: proxy
-  });
+  })
 });
 
 // ブラウザリロード
@@ -70,7 +73,7 @@ gulp.task("postcss", () => {
     .pipe(progeny())
     .pipe(
       plumber({
-        errorHandler: function(err) {
+        errorHandler: function (err) {
           console.log(err.messageFormatted);
           this.emit("end");
         }
@@ -78,11 +81,11 @@ gulp.task("postcss", () => {
     )
     .pipe(sourcemaps.init())
     .pipe(sassGlob())
-    .pipe(gsass({ outputStyle: "compressed" }).on("error", gsass.logError))
+    .pipe(gsass())
     .pipe(
       postcss([
         autoprefixer({
-          // メインブラウザの最新2バージョン、ie10以上、iOS 9以上、Android 5以上
+          // メインブラウザの最新2バージョン、ie11以上、iOS 9以上、Android 5以上
           browsers: ["last 2 version", "iOS >= 10", "Android >= 5.0"],
           cascade: false
         }),
@@ -95,7 +98,7 @@ gulp.task("postcss", () => {
     )
     .pipe(sourcemaps.write("map"))
     .pipe(gulp.dest(dir.src + "css"))
-    .pipe(browserSync.stream());
+    .pipe(browserSync.stream())
 });
 
 // 画像圧縮処理
@@ -111,7 +114,7 @@ gulp.task("imagemin", () => {
       ])
     )
     .pipe(imagemin()) // ←追加
-    .pipe(gulp.dest(dir.dist + "img"));
+    .pipe(gulp.dest(dir.distImg));
 });
 
 gulp.task("minify-html", () => {
@@ -135,7 +138,7 @@ gulp.task("minify-css", () => {
     .pipe(sourcemaps.init())
     .pipe(cssmin())
     .pipe(sourcemaps.write("map"))
-    .pipe(gulp.dest(dir.dist + "css"));
+    .pipe(gulp.dest(dir.distCss));
 });
 
 gulp.task("minify-js", () => {
@@ -144,7 +147,7 @@ gulp.task("minify-js", () => {
     .src(dir.src + "/**/*.js")
     .pipe(
       plumber({
-        errorHandler: function(err) {
+        errorHandler: function (err) {
           console.log(err.messageFormatted);
           this.emit("end");
         }
@@ -153,7 +156,7 @@ gulp.task("minify-js", () => {
     .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(sourcemaps.write("map"))
-    .pipe(gulp.dest(dir.dist + "js"));
+    .pipe(gulp.dest(dir.distJs));
 });
 
 //webpack
@@ -161,7 +164,7 @@ gulp.task("webpack", () => {
   webpackStream(webpackConfig, webpack)
     .pipe(
       plumber({
-        errorHandler: function(err) {
+        errorHandler: function (err) {
           console.log(err.messageFormatted);
           this.emit("end");
         }
@@ -171,6 +174,6 @@ gulp.task("webpack", () => {
 });
 
 // 実行
-gulp.task("default", ["w", "server"]);
+gulp.task("default", gulp.series(gulp.parallel("w", "server")));
 //minify コマンド
-gulp.task("minify", ["minify-html", "minify-css", "minify-js", "imagemin"]);
+gulp.task("minify", gulp.series(gulp.parallel("minify-html", "minify-css", "minify-js", "imagemin")));
