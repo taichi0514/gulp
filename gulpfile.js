@@ -20,12 +20,12 @@ const gulp = require("gulp"),
 let argv = minimist(process.argv.slice(2));
 const dir = {
   src: "./htdocs/", // _srcフォルダ置き換え
-  dist: "../sample/dist" // destフォルダ置き換え
+  dist: "../dist" // destフォルダ置き換え
 };
 
 const watch_reload = [
-  "./public/**/*.html",
-  "./public/**/*.js",
+  "./htdocs/**/*.html",
+  "./htdocs/**/*.js",
   "fuel/app/**/*.php",
   "!fuel/app/logs/**/*.php"
 ];
