@@ -82,7 +82,7 @@ gulp.task("postcss", () => {
     .pipe(
       postcss([
         autoprefixer({
-          // メインブラウザの最新2バージョン、ie10以上、iOS 9以上、Android 5以上
+          // メインブラウザの最新2バージョン、ie11以上、iOS 9以上、Android 5以上
           browsers: ["last 2 version", "iOS >= 10", "Android >= 5.0"],
           cascade: false
         }),
