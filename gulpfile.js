@@ -173,7 +173,7 @@ gulp.task("webpack", () => {
     .pipe(gulp.dest(dir.src + "js"));
 });
 
-// // 実行
-// gulp.task("default", ["w", "server"]);
-// //minify コマンド
-// gulp.task("minify", ["minify-html", "minify-css", "minify-js", "imagemin"]);
+// 実行
+gulp.task("default", gulp.series(gulp.parallel("w", "server")));
+//minify コマンド
+gulp.task("minify", gulp.series(gulp.parallel("minify-html", "minify-css", "minify-js", "imagemin")));
