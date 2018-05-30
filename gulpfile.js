@@ -20,7 +20,10 @@ const gulp = require("gulp"),
 let argv = minimist(process.argv.slice(2));
 const dir = {
   src: "./htdocs/", // _srcフォルダ置き換え
-  dist: "../dist" // destフォルダ置き換え
+  dist: "./dist/htdocs",
+  distCss: "./dist/htdocs/css",
+  distJs: "./dist/htdocs/js",
+  distImg: "./dist/htdocs/img**/*.{jpg,jpeg,png,gif,svg}"
 };
 
 const watch_reload = [
@@ -111,7 +114,7 @@ gulp.task("imagemin", () => {
       ])
     )
     .pipe(imagemin()) // ←追加
-    .pipe(gulp.dest(dir.dist + "img"));
+    .pipe(gulp.dest(dir.distImg));
 });
 
 gulp.task("minify-html", () => {
@@ -135,7 +138,7 @@ gulp.task("minify-css", () => {
     .pipe(sourcemaps.init())
     .pipe(cssmin())
     .pipe(sourcemaps.write("map"))
-    .pipe(gulp.dest(dir.dist + "css"));
+    .pipe(gulp.dest(dir.distCss));
 });
 
 gulp.task("minify-js", () => {
@@ -153,7 +156,7 @@ gulp.task("minify-js", () => {
     .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(sourcemaps.write("map"))
-    .pipe(gulp.dest(dir.dist + "js"));
+    .pipe(gulp.dest(dir.distJs));
 });
 
 //webpack
