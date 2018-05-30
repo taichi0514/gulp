@@ -35,12 +35,12 @@ const watch_reload = [
 
 // ファイル監視
 gulp.task("w", () => {
-  gulp.watch(watch_reload, ["reload"]);
-  gulp.watch(dir.src + "/scss/**/*.scss", ["postcss"]);
+  gulp.watch(watch_reload, gulp.series("reload"))
+  gulp.watch(dir.src + "scss/**/*.scss", gulp.series("postcss"))
 });
 
 gulp.task("sass", () => {
-  gulp.watch(dir.src + "/scss/**/*.scss", ["postcss"]);
+  return gulp.watch(dir.src + "scss/**/*.scss", gulp.series("postcss"))
 });
 
 // ローカルサーバ起動
