@@ -23,7 +23,7 @@ const dir = {
   dist: "./dist/htdocs",
   distCss: "./dist/htdocs/css",
   distJs: "./dist/htdocs/js",
-  distImg: "./dist/htdocs/img**/*.{jpg,jpeg,png,gif,svg}"
+  distImg: "./dist/htdocs/img/"
 };
 
 const watch_reload = [
@@ -104,7 +104,7 @@ gulp.task("postcss", () => {
 // 画像圧縮処理
 gulp.task("imagemin", () => {
   gulp
-    .src([dir.src + "/img/**/*"])
+    .src([dir.src + "/img**/*.{jpg,jpeg,png,gif,svg}"])
     .pipe(
       imagemin([
         pngquant({
