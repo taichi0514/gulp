@@ -1,8 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "gulp": "gulp",
-    "webpack": "webpack"
+    "codeWorks": "npx gulp"
   },
   "devDependencies": {
     "autoprefixer": "^8.5.1",
