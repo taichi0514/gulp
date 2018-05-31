@@ -103,7 +103,7 @@ gulp.task("postcss", () => {
 
 // 画像圧縮処理
 gulp.task("imagemin", () => {
-  gulp
+  return gulp
     .src([dir.src + "/img**/*.{jpg,jpeg,png,gif,svg}"])
     .pipe(
       imagemin([
