@@ -16,6 +16,9 @@ const gulp = require("gulp"),
   imagemin = require("gulp-imagemin"),
   pngquant = require("imagemin-pngquant"),
   autoprefixer = require("autoprefixer"),
+  webpack = require("webpack"),
+  webpackStream = require("webpack-stream"),
+  webpackConfig = require('./webpack.config'),
   minimist = require("minimist");
 let argv = minimist(process.argv.slice(2));
 const dir = {
@@ -161,7 +164,7 @@ gulp.task("minify-js", () => {
 
 //webpack
 gulp.task("webpack", () => {
-  webpackStream(webpackConfig, webpack)
+  return webpackStream(webpackConfig, webpack)
     .pipe(
       plumber({
         errorHandler: function (err) {
