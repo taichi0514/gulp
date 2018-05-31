@@ -2,7 +2,7 @@ const gulp = require("gulp"),
   gsass = require("gulp-sass"),
   sassGlob = require("gulp-sass-glob"),
   plumber = require("gulp-plumber"),
-  browserSync = require("browser-sync"),
+  browserSync = require("browser-sync").create(),
   changed = require("gulp-changed"),
   cache = require("gulp-cached"),
   progeny = require("gulp-progeny"),
@@ -47,20 +47,21 @@ gulp.task("sass", () => {
 });
 
 // ローカルサーバ起動
-gulp.task("server", () => {
-  let proxy = "localhost";
+gulp.task('server', function () {
+  let proxy = '';
   if (argv.proxy !== void 0) {
-    proxy = argv.proxy;
+    proxy = argv.proxy
+    browserSync.init({
+      proxy: proxy
+    })
+  } else {
+    browserSync.init({
+      server: {
+        baseDir: dir.src,
+        index: 'index.html'
+      }
+    })
   }
-
-  browserSync({
-    server: {
-      baseDir: dir.src,
-      index: "index.html"
-    }
-    // notify: false,
-    // proxy: proxy
-  })
 });
 
 // ブラウザリロード
