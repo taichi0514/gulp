@@ -6,7 +6,7 @@
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.49",
     "@babel/preset-env": "^7.0.0-beta.49",
-    "autoprefixer": "^8.5.1",
+    "autoprefixer": "^8.6.0",
     "babel-loader": "^8.0.0-beta.3",
     "browser-sync": "^2.24.4",
     "eslint": "^4.19.1",
@@ -31,7 +31,7 @@
     "jquery": "^3.3.1",
     "minimist": "^1.2.0",
     "postcss-assets": "^5.0.0",
-    "webpack": "^3.10.0",
-    "webpack-stream": "^4.0.0"
+    "webpack": "^4.11.0",
+    "webpack-stream": "^4.0.3"
   }
 }
