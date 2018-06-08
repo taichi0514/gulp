@@ -1,26 +1,26 @@
-const gulp = require("gulp"),
-  gsass = require("gulp-sass"),
-  sassGlob = require("gulp-sass-glob"),
-  plumber = require("gulp-plumber"),
-  browserSync = require("browser-sync").create(),
-  changed = require("gulp-changed"),
-  cache = require("gulp-cached"),
-  progeny = require("gulp-progeny"),
-  rename = require("gulp-rename"),
-  htmlmin = require("gulp-htmlmin"),
-  cssmin = require("gulp-cssmin"),
-  uglify = require("gulp-uglify"),
-  sourcemaps = require("gulp-sourcemaps"),
-  postcss = require("gulp-postcss"),
-  assets = require("postcss-assets"),
-  imagemin = require("gulp-imagemin"),
-  pngquant = require("imagemin-pngquant"),
-  autoprefixer = require("autoprefixer"),
-  webpack = require("webpack"),
-  webpackStream = require("webpack-stream"),
-  webpackConfig = require('./webpack.config'),
-  minimist = require("minimist");
+const gulp = require("gulp");
+const gsass = require("gulp-sass");
+const sassGlob = require("gulp-sass-glob");
+const plumber = require("gulp-plumber");
+const browserSync = require("browser-sync").create();
+const cache = require("gulp-cached");
+const progeny = require("gulp-progeny");
+const htmlmin = require("gulp-htmlmin");
+const cssmin = require("gulp-cssmin");
+const uglify = require("gulp-uglify");
+const sourcemaps = require("gulp-sourcemaps");
+const postcss = require("gulp-postcss");
+const assets = require("postcss-assets");
+const imagemin = require("gulp-imagemin");
+const pngquant = require("imagemin-pngquant");
+const autoprefixer = require("autoprefixer");
+const webpack = require("webpack");
+const webpackStream = require("webpack-stream");
+const webpackConfig = require("./webpack.config");
+const minimist = require("minimist");
+
 let argv = minimist(process.argv.slice(2));
+
 const dir = {
   src: "./htdocs/", // _srcフォルダ置き換え
   dist: "./dist/htdocs",
@@ -38,29 +38,29 @@ const watch_reload = [
 
 // ファイル監視
 gulp.task("w", () => {
-  gulp.watch(watch_reload, gulp.series("reload"))
-  gulp.watch(dir.src + "scss/**/*.scss", gulp.series("postcss"))
+  gulp.watch(watch_reload, gulp.series("reload"));
+  gulp.watch(dir.src + "scss/**/*.scss", gulp.series("postcss"));
 });
 
 gulp.task("sass", () => {
-  return gulp.watch(dir.src + "scss/**/*.scss", gulp.series("postcss"))
+  return gulp.watch(dir.src + "scss/**/*.scss", gulp.series("postcss"));
 });
 
 // ローカルサーバ起動
-gulp.task('server', function () {
-  let proxy = '';
+gulp.task("server", function() {
+  let proxy = "";
   if (argv.proxy !== void 0) {
-    proxy = argv.proxy
+    proxy = argv.proxy;
     browserSync.init({
       proxy: proxy
-    })
+    });
   } else {
     browserSync.init({
       server: {
         baseDir: dir.src,
-        index: 'index.html'
+        index: "index.html"
       }
-    })
+    });
   }
 });
 
@@ -77,7 +77,7 @@ gulp.task("postcss", () => {
     .pipe(progeny())
     .pipe(
       plumber({
-        errorHandler: function (err) {
+        errorHandler: function(err) {
           console.log(err.messageFormatted);
           this.emit("end");
         }
@@ -94,7 +94,7 @@ gulp.task("postcss", () => {
           cascade: false
         }),
         assets({
-          loadPaths: [dir.src + "img/"], //対象ディレクトリ
+          loadPaths: [dir.src + "img/"], // 対象ディレクトリ
           relative: true // 相対パス
           // basePath: dir.src, // ルート相対パス
         })
@@ -102,7 +102,7 @@ gulp.task("postcss", () => {
     )
     .pipe(sourcemaps.write("map"))
     .pipe(gulp.dest(dir.src + "css"))
-    .pipe(browserSync.stream())
+    .pipe(browserSync.stream());
 });
 
 // 画像圧縮処理
@@ -122,7 +122,7 @@ gulp.task("imagemin", () => {
 });
 
 gulp.task("minify-html", () => {
-  //html
+  // html
   return gulp
     .src(dir.src + "/**/*.html")
     .pipe(sourcemaps.init())
@@ -136,7 +136,7 @@ gulp.task("minify-html", () => {
 });
 
 gulp.task("minify-css", () => {
-  //css
+  // css
   return gulp
     .src(dir.src + "/**/*.css")
     .pipe(sourcemaps.init())
@@ -146,12 +146,12 @@ gulp.task("minify-css", () => {
 });
 
 gulp.task("minify-js", () => {
-  //jsgul
+  // jsgul
   return gulp
     .src(dir.src + "/**/*.js")
     .pipe(
       plumber({
-        errorHandler: function (err) {
+        errorHandler: function(err) {
           console.log(err.messageFormatted);
           this.emit("end");
         }
@@ -163,12 +163,12 @@ gulp.task("minify-js", () => {
     .pipe(gulp.dest(dir.distJs));
 });
 
-//webpack
+// webpack
 gulp.task("webpack", () => {
   return webpackStream(webpackConfig, webpack)
     .pipe(
       plumber({
-        errorHandler: function (err) {
+        errorHandler: function(err) {
           console.log(err.messageFormatted);
           this.emit("end");
         }
@@ -179,5 +179,10 @@ gulp.task("webpack", () => {
 
 // 実行
 gulp.task("default", gulp.series(gulp.parallel("w", "server")));
-//minify コマンド
-gulp.task("minify", gulp.series(gulp.parallel("minify-html", "minify-css", "minify-js", "imagemin")));
+// minify コマンド
+gulp.task(
+  "minify",
+  gulp.series(
+    gulp.parallel("minify-html", "minify-css", "minify-js", "imagemin")
+  )
+);
