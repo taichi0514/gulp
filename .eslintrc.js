@@ -5,6 +5,8 @@ module.exports = {
   extends: ["google", "prettier"],
   plugins: ["prettier"],
   rules: {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "linebreak-style": [0],
+    camelcase: [0]
   }
 };
