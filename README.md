@@ -1,34 +1,32 @@
-# gulp v3 → v4設定方法
+# gulp v3 → v4 設定方法
 
-gulpをv4にアップデートしてしまうとこれまでのgulp(v3)が起動できなくなります。  
-これまでのgulpfile(v3)を使うにはグローバルからgulp-cliを削除し、  
-ローカルのgulpを起動させることによってversionの違うgulpを起動させる事ができます。  
+gulp を v4 にアップデートしてしまうとこれまでの gulp(v3)が起動できなくなります。  
+これまでの gulpfile(v3)を使うにはグローバルから gulp-cli を削除し、  
+ローカルの gulp を起動させることによって version の違う gulp を起動させる事ができます。
 
-グローバルのgulp削除コマンド  
+グローバルの gulp 削除コマンド
 
 `npm rm --global gulp-cli`  
-`npm rm --global gulp`  
+`npm rm --global gulp`
 
-※ローカルのgulpとはpackage.jsonに記載されているgulpのバージョンの事です。
+※ローカルの gulp とは package.json に記載されている gulp のバージョンの事です。
 
+これからは npx コマンドで gulp を実行させる必要があります。  
+npx とは Node.js バージョン 8.2.0 以降から追加された機能で、ローカルにある gulp を簡単に起動させる事ができます。  
+nodist 経由で node.js をインストールされてる方は手動で npx をインストールしなくてはなりません。
 
-これからはnpxコマンドでgulpを実行させる必要があります。  
-npxとはNode.jsバージョン8.2.0以降から追加された機能で、ローカルにあるgulpを簡単に起動させる事ができます。  
-nodist経由でnode.jsをインストールされてる方は手動でnpxをインストールしなくてはなりません。  
+インストールコマンド
 
-インストールコマンド  
+`npm i -g npx`
 
-`npm i npx`  
+ちなみに nodist 経由で node.js をインストールされてる場合 npm が自動でアップデートできないので,  
+下記のコマンドを実行してください。
 
-ちなみにnodist経由でnode.jsをインストールされてる場合npmが自動でアップデートできないので,  
-下記のコマンドを実行してください。  
+`npm i -g npm`
 
-`npm i npm`  
+以上で gulp v3 → v4 設定は終わりです。
 
-以上でgulp v3 → v4設定は終わりです。
-
-
-# gulp 起動コマンド  
+# gulp 起動コマンド
 
 `npx gulp`
 
