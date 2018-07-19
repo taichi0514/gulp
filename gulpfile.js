@@ -65,7 +65,7 @@ gulp.task("server", function() {
 });
 
 // ブラウザリロード
-gulp.task("reload", (done) => {
+gulp.task("reload", done => {
   browserSync.reload();
   done();
 });
