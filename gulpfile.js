@@ -65,8 +65,9 @@ gulp.task("server", function() {
 });
 
 // ブラウザリロード
-gulp.task("reload", () => {
+gulp.task("reload", (done) => {
   browserSync.reload();
+  done();
 });
 
 // postcssを使用してSCSSを変換
