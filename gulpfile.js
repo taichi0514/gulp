@@ -39,7 +39,6 @@ const watch_reload = [
 // ファイル監視
 gulp.task("w", () => {
   gulp.watch(watch_reload, gulp.series("reload"));
-  gulp.watch(dir.src + "scss/**/*.scss", gulp.series("postcss"));
 });
 
 gulp.task("sass", () => {
@@ -179,7 +178,7 @@ gulp.task("webpack", () => {
 });
 
 // 実行
-gulp.task("default", gulp.series(gulp.parallel("w", "server")));
+gulp.task("default", gulp.series(gulp.parallel("postcss", "w", "server")));
 // minify コマンド
 gulp.task(
   "minify",
