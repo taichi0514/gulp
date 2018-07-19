@@ -178,7 +178,10 @@ gulp.task("webpack", () => {
 });
 
 // 実行
-gulp.task("default", gulp.series(gulp.parallel("postcss", "w", "server")));
+gulp.task(
+  "default",
+  gulp.series(gulp.parallel("postcss", "sass", "w", "server"))
+);
 // minify コマンド
 gulp.task(
   "minify",
