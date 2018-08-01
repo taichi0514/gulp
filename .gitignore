@@ -2,3 +2,4 @@
 /htdocs/*
 Thumbs.db
 *.code-workspace
+/dist/*
