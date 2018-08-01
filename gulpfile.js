@@ -106,19 +106,24 @@ gulp.task("postcss", () => {
 });
 
 // 画像圧縮処理
-gulp.task("imagemin", () => {
-  return gulp
-    .src([dir.src + "/img**/*.{jpg,jpeg,png,gif,svg}"])
+gulp.task("imagemin-jpg", done => {
+  gulp
+    .src([dir.src + "/img/**/*.{jpg,jpeg,gif,svg}"])
+    .pipe(imagemin())
+    .pipe(gulp.dest(dir.dist + "/img"));
+  done();
+});
+
+gulp.task("imagemin-png", done => {
+  gulp
+    .src([dir.src + "/img/**/*.png"])
     .pipe(
-      imagemin([
-        pngquant({
-          quality: "65-80",
-          speed: 1
-        })
-      ])
+      imagemin({
+        use: [pngquant()]
+      })
     )
-    .pipe(imagemin()) // ←追加
-    .pipe(gulp.dest(dir.distImg));
+    .pipe(gulp.dest(dir.dist + "/img"));
+  done();
 });
 
 gulp.task("minify-html", () => {
@@ -177,15 +182,22 @@ gulp.task("webpack", () => {
     .pipe(gulp.dest(dir.src + "js"));
 });
 
-// 実行
+// imagemin
 gulp.task(
-  "default",
-  gulp.series(gulp.parallel("postcss", "sass", "w", "server"))
+  "imagemin",
+  gulp.series(gulp.parallel("imagemin-jpg", "imagemin-png"))
 );
+
 // minify コマンド
 gulp.task(
   "minify",
   gulp.series(
     gulp.parallel("minify-html", "minify-css", "minify-js", "imagemin")
   )
+);
+
+// 実行
+gulp.task(
+  "default",
+  gulp.series(gulp.parallel("postcss", "sass", "w", "server"))
 );
