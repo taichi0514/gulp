@@ -34,11 +34,15 @@ const watch_reload = ["./htdocs/**/*.html", "./htdocs/**/*.js", "fuel/app/**/*.p
 
 // ファイル監視
 gulp.task("w", () => {
-    gulp.watch(watch_reload, gulp.series("reload", "prettier"));
+    gulp.watch(watch_reload, gulp.series("reload"));
 });
 
 gulp.task("sass", () => {
-    return gulp.watch(dir.src + "scss/**/*.scss", gulp.series("postcss", "prettier"));
+    return gulp.watch(dir.src + "scss/**/*.scss", gulp.series("postcss"));
+});
+
+gulp.task("prettierWatch", () => {
+    return gulp.watch(dir.src + "*/**/*.{scss,css,js}", gulp.series("prettier"));
 });
 
 // ローカルサーバ起動
@@ -187,7 +191,7 @@ gulp.task("minify", gulp.series(gulp.parallel("minify-html", "minify-css", "mini
 // prettierコマンド
 gulp.task("prettier", () => {
     return gulp
-        .src("./htdocs/**/*.html")
+        .src("/htdocs/**/*.{scss,css,js}")
         .pipe(gulpPrettier({ singleQuote: true }))
         .pipe(gulp.dest(dir.dist));
 });
