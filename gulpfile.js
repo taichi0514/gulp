@@ -18,186 +18,179 @@ const webpack = require("webpack");
 const webpackStream = require("webpack-stream");
 const webpackConfig = require("./webpack.config");
 const minimist = require("minimist");
+const gulpPrettier = require("gulp-prettier");
 
 let argv = minimist(process.argv.slice(2));
 
 const dir = {
-  src: "./htdocs/", // _srcフォルダ置き換え
-  dist: "./dist/htdocs",
-  distCss: "./dist/htdocs/css",
-  distJs: "./dist/htdocs/js",
-  distImg: "./dist/htdocs/img/"
+    src: "./htdocs/", // _srcフォルダ置き換え
+    dist: "./dist/htdocs",
+    distCss: "./dist/htdocs/css",
+    distJs: "./dist/htdocs/js",
+    distImg: "./dist/htdocs/img/"
 };
 
-const watch_reload = [
-  "./htdocs/**/*.html",
-  "./htdocs/**/*.js",
-  "fuel/app/**/*.php",
-  "!fuel/app/logs/**/*.php"
-];
+const watch_reload = ["./htdocs/**/*.html", "./htdocs/**/*.js", "fuel/app/**/*.php", "!fuel/app/logs/**/*.php"];
 
 // ファイル監視
 gulp.task("w", () => {
-  gulp.watch(watch_reload, gulp.series("reload"));
+    gulp.watch(watch_reload, gulp.series("reload", "prettier"));
 });
 
 gulp.task("sass", () => {
-  return gulp.watch(dir.src + "scss/**/*.scss", gulp.series("postcss"));
+    return gulp.watch(dir.src + "scss/**/*.scss", gulp.series("postcss", "prettier"));
 });
 
 // ローカルサーバ起動
 gulp.task("server", function() {
-  let proxy = "";
-  if (argv.proxy !== void 0) {
-    proxy = argv.proxy;
-    browserSync.init({
-      proxy: proxy
-    });
-  } else {
-    browserSync.init({
-      server: {
-        baseDir: dir.src,
-        index: "index.html"
-      }
-    });
-  }
+    let proxy = "";
+    if (argv.proxy !== void 0) {
+        proxy = argv.proxy;
+        browserSync.init({
+            proxy: proxy
+        });
+    } else {
+        browserSync.init({
+            server: {
+                baseDir: dir.src,
+                index: "index.html"
+            }
+        });
+    }
 });
 
 // ブラウザリロード
 gulp.task("reload", done => {
-  browserSync.reload();
-  done();
+    browserSync.reload();
+    done();
 });
 
 // postcssを使用してSCSSを変換
 gulp.task("postcss", () => {
-  return gulp
-    .src(dir.src + "/scss/**/*.scss")
-    .pipe(cache("postcss"))
-    .pipe(progeny())
-    .pipe(
-      plumber({
-        errorHandler: function(err) {
-          console.log(err.messageFormatted);
-          this.emit("end");
-        }
-      })
-    )
-    .pipe(sourcemaps.init())
-    .pipe(sassGlob())
-    .pipe(gsass())
-    .pipe(
-      postcss([
-        autoprefixer({
-          // メインブラウザの最新2バージョン、ie11以上、iOS 9以上、Android 5以上
-          browsers: ["last 2 version", "iOS >= 10", "Android >= 5.0"],
-          cascade: false
-        }),
-        assets({
-          loadPaths: [dir.src + "img/"], // 対象ディレクトリ
-          relative: true // 相対パス
-          // basePath: dir.src, // ルート相対パス
-        })
-      ])
-    )
-    .pipe(sourcemaps.write("map"))
-    .pipe(gulp.dest(dir.src + "css"))
-    .pipe(browserSync.stream());
+    return gulp
+        .src(dir.src + "/scss/**/*.scss")
+        .pipe(cache("postcss"))
+        .pipe(progeny())
+        .pipe(
+            plumber({
+                errorHandler: function(err) {
+                    console.log(err.messageFormatted);
+                    this.emit("end");
+                }
+            })
+        )
+        .pipe(sourcemaps.init())
+        .pipe(sassGlob())
+        .pipe(gsass())
+        .pipe(
+            postcss([
+                autoprefixer({
+                    // メインブラウザの最新2バージョン、ie11以上、iOS 9以上、Android 5以上
+                    browsers: ["last 2 version", "iOS >= 10", "Android >= 5.0"],
+                    cascade: false
+                }),
+                assets({
+                    loadPaths: [dir.src + "img/"], // 対象ディレクトリ
+                    relative: true // 相対パス
+                    // basePath: dir.src, // ルート相対パス
+                })
+            ])
+        )
+        .pipe(sourcemaps.write("map"))
+        .pipe(gulp.dest(dir.src + "css"))
+        .pipe(browserSync.stream());
 });
 
 // 画像圧縮処理
 gulp.task("imagemin-jpg", done => {
-  gulp
-    .src([dir.src + "/img/**/*.{jpg,jpeg,gif,svg}"])
-    .pipe(imagemin())
-    .pipe(gulp.dest(dir.dist + "/img"));
-  done();
+    gulp
+        .src([dir.src + "/img/**/*.{jpg,jpeg,gif,svg}"])
+        .pipe(imagemin())
+        .pipe(gulp.dest(dir.dist + "/img"));
+    done();
 });
 
 gulp.task("imagemin-png", done => {
-  gulp
-    .src([dir.src + "/img/**/*.png"])
-    .pipe(
-      imagemin({
-        use: [pngquant()]
-      })
-    )
-    .pipe(gulp.dest(dir.dist + "/img"));
-  done();
+    gulp
+        .src([dir.src + "/img/**/*.png"])
+        .pipe(
+            imagemin({
+                use: [pngquant()]
+            })
+        )
+        .pipe(gulp.dest(dir.dist + "/img"));
+    done();
 });
 
 gulp.task("minify-html", () => {
-  // html
-  return gulp
-    .src(dir.src + "/**/*.html")
-    .pipe(sourcemaps.init())
-    .pipe(
-      htmlmin({
-        collapseWhitespace: true
-      })
-    )
-    .pipe(sourcemaps.write("map"))
-    .pipe(gulp.dest(dir.dist));
+    // html
+    return gulp
+        .src(dir.src + "/**/*.html")
+        .pipe(sourcemaps.init())
+        .pipe(
+            htmlmin({
+                collapseWhitespace: true
+            })
+        )
+        .pipe(sourcemaps.write("map"))
+        .pipe(gulp.dest(dir.dist));
 });
 
 gulp.task("minify-css", () => {
-  // css
-  return gulp
-    .src(dir.src + "/**/*.css")
-    .pipe(sourcemaps.init())
-    .pipe(cssmin())
-    .pipe(sourcemaps.write("map"))
-    .pipe(gulp.dest(dir.distCss));
+    // css
+    return gulp
+        .src(dir.src + "/**/*.css")
+        .pipe(sourcemaps.init())
+        .pipe(cssmin())
+        .pipe(sourcemaps.write("map"))
+        .pipe(gulp.dest(dir.distCss));
 });
 
 gulp.task("minify-js", () => {
-  // jsgul
-  return gulp
-    .src(dir.src + "/**/*.js")
-    .pipe(
-      plumber({
-        errorHandler: function(err) {
-          console.log(err.messageFormatted);
-          this.emit("end");
-        }
-      })
-    )
-    .pipe(sourcemaps.init())
-    .pipe(uglify())
-    .pipe(sourcemaps.write("map"))
-    .pipe(gulp.dest(dir.distJs));
+    // jsgul
+    return gulp
+        .src(dir.src + "/**/*.js")
+        .pipe(
+            plumber({
+                errorHandler: function(err) {
+                    console.log(err.messageFormatted);
+                    this.emit("end");
+                }
+            })
+        )
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(sourcemaps.write("map"))
+        .pipe(gulp.dest(dir.distJs));
 });
 
 // webpack
 gulp.task("webpack", () => {
-  return webpackStream(webpackConfig, webpack)
-    .pipe(
-      plumber({
-        errorHandler: function(err) {
-          console.log(err.messageFormatted);
-          this.emit("end");
-        }
-      })
-    )
-    .pipe(gulp.dest(dir.src + "js"));
+    return webpackStream(webpackConfig, webpack)
+        .pipe(
+            plumber({
+                errorHandler: function(err) {
+                    console.log(err.messageFormatted);
+                    this.emit("end");
+                }
+            })
+        )
+        .pipe(gulp.dest(dir.src + "js"));
 });
 
 // imagemin
-gulp.task(
-  "imagemin",
-  gulp.series(gulp.parallel("imagemin-jpg", "imagemin-png"))
-);
+gulp.task("imagemin", gulp.series(gulp.parallel("imagemin-jpg", "imagemin-png")));
 
 // minify コマンド
-gulp.task(
-  "minify",
-  gulp.series(
-    gulp.parallel("minify-html", "minify-css", "minify-js", "imagemin")
-  )
-);
+gulp.task("minify", gulp.series(gulp.parallel("minify-html", "minify-css", "minify-js", "imagemin")));
+
+// prettierコマンド
+gulp.task("prettier", () => {
+    return gulp
+        .src("./htdocs/**/*.html")
+        .pipe(gulpPrettier({ singleQuote: true }))
+        .pipe(gulp.dest(dir.dist));
+});
 
 // 実行
-gulp.task(
-  "default",
-  gulp.series(gulp.parallel("postcss", "sass", "w", "server"))
-);
+gulp.task("default", gulp.series(gulp.parallel("postcss", "sass", "w", "server")));
