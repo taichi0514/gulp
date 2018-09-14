@@ -2,8 +2,11 @@
   "private": true,
   "scripts": {
     "codeWorks": "npx gulp",
-    "format": "prettier --write ./htdocs/**/*.{scss,css,js} ",
-    "formatW": "onchange ./htdocs/**/*.{scss,css,js} -- npm run format"
+    "formatSass": "prettier --write ./htdocs/**/*.scss ",
+    "formatSassW": "onchange ./htdocs/**/*.scss -- npm run formatSass",
+    "formatJs": "prettier --write ./htdocs/**/*.js",
+    "formatJsW": "onchange ./htdocs/**/*.js -- npm run formatJs",
+    "format": "npm-run-all -p formatSassW formatJsW"
   },
   "devDependencies": {
     "@babel/core": "^7.0.1",
