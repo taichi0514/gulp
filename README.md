@@ -1,3 +1,10 @@
+
+#2018/09/28
+村井の社内gulp開発は今日までです。
+今後はgithubに公開しているリポジトリで開発していくので、
+興味のある方は下記参照お願い致します。
+https://github.com/taichi0514
+
 # gulp v3 → v4 設定方法
 
 gulp を v4 にアップデートしてしまうとこれまでの gulp(v3)が起動できなくなります。  
@@ -78,3 +85,4 @@ https://ichimaruni-design.com/2017/06/image-min/
 ### minify-js
 
 `npx minify-js`
+
