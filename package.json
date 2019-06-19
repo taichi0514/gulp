@@ -18,7 +18,7 @@
     "browser-sync": "2.24.7",
     "eslint": "5.5.0",
     "eslint-config-google": "0.10.0",
-    "eslint-config-prettier": "3.0.1",
+    "eslint-config-prettier": "5.0.0",
     "eslint-plugin-prettier": "2.6.2",
     "gulp": "4.0.0",
     "gulp-cached": "1.1.1",
