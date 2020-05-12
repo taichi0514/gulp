@@ -45,7 +45,7 @@
     "minimist": "1.2.5",
     "onchange": "4.1.0",
     "postcss-assets": "5.0.0",
-    "prettier": "1.14.2",
+    "prettier": "1.19.1",
     "uglifyjs-webpack-plugin": "1.3.0",
     "webpack": "4.18.0",
     "webpack-stream": "5.1.1"
