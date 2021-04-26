@@ -34,7 +34,7 @@
     "gulp-sass": "4.1.0",
     "gulp-sass-glob": "1.1.0",
     "gulp-sourcemaps": "2.6.5",
-    "imagemin-pngquant": "8.0.0",
+    "imagemin-pngquant": "9.0.2",
     "gulp-uglify": "3.0.2",
     "jquery": "3.5.1",
     "minimist": "1.2.5",
