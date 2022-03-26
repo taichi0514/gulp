@@ -37,7 +37,7 @@
     "imagemin-pngquant": "8.0.0",
     "gulp-uglify": "3.0.2",
     "jquery": "3.5.1",
-    "minimist": "1.2.5",
+    "minimist": "1.2.6",
     "onchange": "4.1.0",
     "postcss-assets": "5.0.0",
     "prettier": "1.19.1",
