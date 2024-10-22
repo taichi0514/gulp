@@ -9,8 +9,8 @@
     "format": "npm-run-all -p formatSassW formatJsW"
   },
   "devDependencies": {
-    "@babel/core": "7.9.6",
-    "@babel/preset-env": "7.9.6",
+    "@babel/core": "7.25.9",
+    "@babel/preset-env": "7.25.9",
     "@bdchauvette/gulp-prettier": "2.0.0",
     "@prettier/plugin-php": "0.14.0",
     "autoprefixer": "9.7.6",
